@@ -1,0 +1,277 @@
+fred kwizera S3C
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fred Conf</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:url("background.jpg") center center/cover no-repeat fixed;
+color:white;
+text-align:center;
+}
+
+.overlay{
+background:rgba(0,0,0,0.5);
+min-height:100vh;
+padding:20px;
+}
+
+.profile{
+width:150px;
+height:150px;
+border-radius:50%;
+border:5px solid white;
+object-fit:cover;
+margin-top:20px;
+}
+
+button{
+padding:15px 30px;
+margin:10px;
+border:none;
+border-radius:10px;
+font-size:18px;
+cursor:pointer;
+}
+
+button:hover{
+transform:scale(1.05);
+}
+
+#joinBtn{
+background:#28a745;
+color:white;
+}
+
+/* Yellow Room Name Button */
+.room-btn{
+background:yellow;
+color:black;
+}
+
+/* Pink Password Button */
+.pass-btn{
+background:pink;
+color:black;
+}
+
+.moderator-btn{
+background:orange;
+color:white;
+}
+
+.guest-btn{
+background:#2196f3;
+color:white;
+}
+
+input{
+padding:12px;
+width:260px;
+border:none;
+border-radius:8px;
+font-size:16px;
+margin:10px;
+}
+
+#roomBox,
+#options,
+#passwordBox,
+#meet{
+display:none;
+}
+
+#roomName,
+#moderatorPassword{
+display:none;
+}
+
+#meet{
+width:95%;
+height:600px;
+margin:20px auto;
+border-radius:15px;
+overflow:hidden;
+}
+
+</style>
+
+<script src="https://meet.jit.si/external_api.js"></script>
+
+</head>
+
+<body>
+
+<div class="overlay">
+
+<img src="profile.jpg" class="profile">
+
+<h1>🎥👑 Fred Conf Video Meeting</h1>
+
+<p>Made by Fred Kwizera & Eric Igiraneza</p>
+
+<button id="joinBtn" onclick="openRoomBox()">
+🚀 Join Meeting
+</button>
+
+<div id="roomBox">
+
+<button class="room-btn"
+onclick="showRoomInput();this.style.display='none';">
+🟡 Enter Room Name
+</button>
+
+<br>
+
+<input
+type="text"
+id="roomName"
+placeholder="Enter Room Name">
+
+<br>
+
+<button onclick="showOptions()">
+Continue
+</button>
+
+</div>
+
+<div id="options">
+
+<button class="moderator-btn"
+onclick="joinModerator()">
+👑 Join as Moderator
+</button>
+
+<button class="guest-btn"
+onclick="joinGuest()">
+👤 Join as Guest
+</button>
+
+</div>
+
+<div id="passwordBox">
+
+<button class="pass-btn"
+onclick="showPasswordInput();this.style.display='none';">
+🩷 Enter Moderator Password
+</button>
+
+<br>
+
+<input
+type="password"
+id="moderatorPassword"
+placeholder="Moderator Password">
+
+<br>
+
+<button onclick="checkPassword()">
+Login
+</button>
+
+</div>
+
+<div id="meet"></div>
+
+</div>
+
+<script>
+
+let api=null;
+
+function openRoomBox(){
+document.getElementById("joinBtn").style.display="none";
+document.getElementById("roomBox").style.display="block";
+}
+
+function showRoomInput(){
+document.getElementById("roomName").style.display="inline-block";
+}
+
+function showPasswordInput(){
+document.getElementById("moderatorPassword").style.display="inline-block";
+}
+
+function showOptions(){
+
+if(document.getElementById("roomName").value.trim()==""){
+alert("Enter Room Name");
+return;
+}
+
+document.getElementById("roomBox").style.display="none";
+document.getElementById("options").style.display="block";
+}
+
+function joinModerator(){
+document.getElementById("options").style.display="none";
+document.getElementById("passwordBox").style.display="block";
+}
+
+function checkPassword(){
+
+if(document.getElementById("moderatorPassword").value=="34533"){
+
+document.getElementById("passwordBox").style.display="none";
+
+startMeeting("Moderator");
+
+}else{
+
+alert("Wrong Password");
+}
+
+}
+
+function joinGuest(){
+
+document.getElementById("options").style.display="none";
+
+startMeeting("Guest");
+
+}
+
+function startMeeting(user){
+
+document.getElementById("meet").style.display="block";
+
+if(api){
+api.dispose();
+}
+
+const options={
+
+roomName:"FredConf_"+document.getElementById("roomName").value,
+
+width:"100%",
+
+height:600,
+
+parentNode:document.querySelector("#meet"),
+
+userInfo:{
+displayName:user
+},
+
+configOverwrite:{
+prejoinPageEnabled:false
+}
+
+};
+
+api=new JitsiMeetExternalAPI("meet.jit.si",options);
+
+}
+
+</script>
+
+</body>
+</html>
+KWIZERA FRED & ERIC IGIRANEZA
